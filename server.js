@@ -15,7 +15,7 @@ try {
     throw new Error("Missing required fields: method or endpoint");
   }
 
-  const timestamp = Date.now().toString();
+const timestamp = Math.floor(Date.now()).toString();
   const windowMs = '30000';
   const prehash = timestamp + method + endpoint + body;
 
