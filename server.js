@@ -16,7 +16,7 @@ try {
   }
 
   const timestamp = Date.now().toString();
-  const windowMs = '10000';
+  const windowMs = '30000';
   const prehash = timestamp + method + endpoint + body;
 
   const signature = crypto
@@ -37,7 +37,7 @@ try {
 }
 
   const timestamp = Date.now().toString();
-  const windowMs = '10000';
+  const windowMs = '30000';
   const prehash = timestamp + method + endpoint + body;
 
   const signature = crypto
@@ -55,7 +55,7 @@ try {
 });
 
 // ✅ This is critical
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 30000;
 app.listen(PORT, () => {
   console.log(`Bitvavo signer running on port ${PORT}`);
 });
