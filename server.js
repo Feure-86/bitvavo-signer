@@ -8,7 +8,33 @@ const API_SECRET = '99cfd13bb9a4d2263f3ac520964108370c5f586e7283472d13306b9f3978
 app.use(express.json());
 
 app.post('/sign', (req, res) => {
+try {
   const { method, endpoint, body } = req.body;
+
+  if (!method || !endpoint) {
+    throw new Error("Missing required fields: method or endpoint");
+  }
+
+  const timestamp = Date.now().toString();
+  const windowMs = '10000';
+  const prehash = timestamp + method + endpoint + body;
+
+  const signature = crypto
+    .createHmac('sha256', API_SECRET)
+    .update(prehash)
+    .digest('hex');
+
+  res.json({
+    apiKey: API_KEY,
+    signature,
+    timestamp,
+    windowMs,
+    endpoint: `https://api.bitvavo.com${endpoint}`
+  });
+} catch (error) {
+  console.error("Signing error:", error.message);
+  res.status(500).send("Internal Server Error: " + error.message);
+}
 
   const timestamp = Date.now().toString();
   const windowMs = '10000';
